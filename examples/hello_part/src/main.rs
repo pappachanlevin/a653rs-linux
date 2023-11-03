@@ -19,6 +19,7 @@ mod hello {
     use humantime::format_duration;
     use log::*;
     use serde::{Deserialize, Serialize};
+    use openCAS::VCAS;
 
     #[sampling_out(name = "Hello", msg_size = "10KB")]
     struct HelloSource;
@@ -51,7 +52,19 @@ mod hello {
         deadline = "Soft"
     )]
     fn aperiodic(ctx: aperiodic::Context) {
-        info!("Start Aperiodic");
+       let mut vcas = VCas {
+	last_advisory: VAdvisory::StrengthenDescend2500,
+		};
+	let (adv, value) = vcas.process(
+		Length::new::<foot>(0.0),
+		Velocity::new::<foot_per_minute>(0.0),
+		Velocity::new::<foot_per_minute>(0.0),
+		Time::new::<second>(15.0),
+	);
+
+	println!("Adv: {:#?} and value> {:#?}". adv, value );
+
+	 info!("Start Aperiodic");
         for i in 0..i32::MAX {
             if let SystemTime::Normal(time) = ctx.get_time() {
                 let round = Duration::from_millis(time.as_millis() as u64);

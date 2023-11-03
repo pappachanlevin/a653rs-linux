@@ -18,3 +18,4 @@ nix = "0.25"
 memmap2 = "0.5.5"
 humantime = "2.1"
 once_cell = "1.13"
+opencas = { git = "https://github.com/aeronautical-informatics/openCAS.git", branch = "main" }
